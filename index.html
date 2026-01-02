@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>factorlab Insights | Strategic Wealth Intelligence</title>
+    <meta name="description" content="Data-driven investment intelligence and smart wealth strategies from factorlab.">
+
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700,900&display=swap" rel="stylesheet">
+
+    <style>
+        /* 
+         * 🎨 FACTORLAB DARK MODE PRESTIGE
+         * Black | Gold/Teal | Executive
+         */
+
+        :root {
+            /* Dark Theme Palette */
+            --bg-body: #050505;
+            --bg-card: #0f1115;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-teal: #00b3a4;
+            --accent-glow: rgba(0, 179, 164, 0.2);
+            --border-dark: #1e293b;
+
+            --font-heading: 'Satoshi', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 
+         * 1️⃣ LANDING SECTION
+         */
+        .landing-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .brand-logo {
+            height: 48px;
+            width: auto;
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .subheading {
+            font-size: clamp(1rem, 2vw, 1.15rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: 48px;
+            max-width: 580px;
+        }
+
+        /* 
+         * 2️⃣ CUSTOM ZO FORM STYLING
+         * Overriding default styles for premium look
+         */
+        #customForm {
+            width: 100%;
+            max-width: 500px;
+            /* Reduced width */
+            margin-bottom: 0px;
+        }
+
+        /* Hide unwanted Zoho elements */
+        #SIGNUP_HEADING,
+        .quick_form_5_css>div:first-child>span {
+            display: none !important;
+        }
+
+        #zcampaignOptinForm {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .quick_form_5_css input[type="text"] {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-dark);
+            color: var(--text-primary);
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .quick_form_5_css input[type="text"]:focus {
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+            background: #0a0a0a;
+        }
+
+        .quick_form_5_css input[type="submit"] {
+            width: 100%;
+            background: var(--accent-teal);
+            color: #000;
+            /* Contrast text for teal button */
+            font-weight: 700;
+            font-family: var(--font-heading);
+            border: none;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quick_form_5_css input[type="submit"]:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px var(--accent-glow);
+            filter: brightness(1.1);
+        }
+
+        #errorMsgDiv {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            display: none;
+            /* Hide default, let JS handle show if needed by Zoho */
+        }
+
+        /* Footer/Credits styles removed as requested */
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            .subheading {
+                font-size: 1rem;
+            }
+
+            .brand-logo {
+                height: 40px;
+            }
+
+            .landing-container {
+                padding: 40px 20px;
+                justify-content: center;
+                /* Ensure centered vertical alignment on mobile */
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Squeeze Landing -->
+    <div class="landing-container">
+        <!-- Logo (Kept intact with invert filter for dark mode) -->
+        <img src="factorlab logo.png" alt="factorlab" class="brand-logo">
+
+        <!-- Headline -->
+        <h1>Join the Inner Circle</h1>
+
+        <!-- Subheading -->
+        <p class="subheading">
+            Institutional-grade investment intelligence, market perspectives, and smart wealth strategies - delivered to
+            your inbox.
+        </p>
+
+        <!-- ZOHO EMBED FORM -->
+        <div id="customForm">
+            <div class="quick_form_5_css" name="SIGNUP_BODY">
+                <div>
+                    <!-- Hidden internal heading -->
+                    <span id="SIGNUP_HEADING">Join Our Newsletter</span>
+                    <div style="position:relative;">
+                        <div id="Zc_SignupSuccess"
+                            style="display:none;position:absolute;width:100%;background-color: #0f1115; padding: 10px; border: 1px solid var(--accent-teal); border-radius: 8px; margin-top: 10px; z-index: 50;">
+                            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tbody>
+                                    <tr>
+                                        <td width="10%">
+                                            <img class="successicon"
+                                                src="https://oklf-zgp4.maillist-manage.in/images/challangeiconenable.jpg"
+                                                align="absmiddle" style="filter: brightness(0.8);">
+                                        </td>
+                                        <td>
+                                            <span id="signupSuccessMsg"
+                                                style="color: var(--accent-teal); font-family: sans-serif; font-size: 14px;word-break:break-word">&nbsp;&nbsp;Success!
+                                                You're on the list.</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <form method="POST" id="zcampaignOptinForm"
+                        action="https://oklf-zgp4.maillist-manage.in/weboptin.zc" target="_zcSignup"
+                        onsubmit="zcScptlessSubmit(this)">
+                        <div id="errorMsgDiv">Please correct the marked field(s) below.</div>
+
+                        <!-- Email Field -->
+                        <div>
+                            <input type="text" placeholder="Email Address" changeitem="SIGNUP_FORM_FIELD"
+                                name="CONTACT_EMAIL" id="EMBED_FORM_EMAIL_LABEL" required>
+                        </div>
+
+                        <!-- Name Field -->
+                        <div>
+                            <input type="text" placeholder="First Name" changeitem="SIGNUP_FORM_FIELD" name="LASTNAME"
+                                id="EMBED_FORM_NAME_LABEL">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div>
+                            <input type="submit" name="SIGNUP_SUBMIT_BUTTON" id="zcWebOptin" value="Subscribe for Free">
+                        </div>
+
+                        <!-- Hidden Zoho Fields -->
+                        <input type="hidden" id="fieldBorder" value="">
+                        <input type="hidden" id="submitType" name="submitType" value="optinCustomView">
+                        <input type="hidden" id="emailReportId" name="emailReportId" value="">
+                        <input type="hidden" id="formType" name="formType" value="QuickForm">
+                        <input type="hidden" name="zx" id="cmpZuid" value="1dfbd0119a">
+                        <input type="hidden" name="zcvers" value="2.0">
+                        <input type="hidden" name="oldListIds" id="allCheckedListIds" value="">
+                        <input type="hidden" id="mode" name="mode" value="OptinCreateView">
+                        <input type="hidden" id="zcld" name="zcld" value="1451445964dac983">
+                        <input type="hidden" id="zctd" name="zctd" value="1451445964d95e31">
+                        <input type="hidden" id="document_domain" value="">
+                        <input type="hidden" id="zc_Url" value="oklf-zgp4.maillist-manage.in">
+                        <input type="hidden" id="new_optin_response_in" value="0">
+                        <input type="hidden" id="duplicate_optin_response_in" value="0">
+                        <input type="hidden" name="zc_trackCode" id="zc_trackCode" value="ZCFORMVIEW">
+                        <input type="hidden" id="zc_formIx" name="zc_formIx"
+                            value="3z91418ee0f627cabfb28f2781806f47a0c220e2d3a5b22f2bc663ff6f94de4dca">
+                        <input type="hidden" id="viewFrom" value="URL_ACTION">
+                        <input type="hidden" id="scriptless" name="scriptless" value="yes">
+                        <input type="hidden" id="zc_spmSubmit" name="zc_spmSubmit" value="ZCSPMSUBMIT">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zoho Helper Script -->
+    <script>
+        function zcScptlessSubmit(parentNode) {
+            if (parentNode.querySelector("#zc_spmSubmit")) { parentNode.querySelector("#zc_spmSubmit").remove(); } parentNode.submit();
+        }
+    </script>
+
+</body>
+
+</html>
