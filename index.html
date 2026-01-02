@@ -234,8 +234,8 @@
                     </div>
 
                     <form method="POST" id="zcampaignOptinForm"
-                        action="https://oklf-zgp4.maillist-manage.in/weboptin.zc" target="_zcSignup"
-                        onsubmit="zcScptlessSubmit(this)">
+                        action="https://script.google.com/macros/s/AKfycbwcUTu1Ulm6_-TpaoPEnt76jrrfS98nUA3WVCo-o6mC-0ZqZF0_gjLNHZM6rarwz08/exec"
+                        target="_zcSignup" onsubmit="zcScptlessSubmit(this)">
                         <div id="errorMsgDiv">Please correct the marked field(s) below.</div>
 
                         <!-- Email Field -->
@@ -276,17 +276,29 @@
                         <input type="hidden" id="viewFrom" value="URL_ACTION">
                         <input type="hidden" id="scriptless" name="scriptless" value="yes">
                         <input type="hidden" id="zc_spmSubmit" name="zc_spmSubmit" value="ZCSPMSUBMIT">
+
+                        <!-- Tracking Source Field -->
+                        <input type="hidden" name="source" id="sourceField" value="Direct">
                     </form>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Zoho Helper Script -->
+    <!-- Zoho Helper & Tracking Script -->
     <script>
         function zcScptlessSubmit(parentNode) {
             if (parentNode.querySelector("#zc_spmSubmit")) { parentNode.querySelector("#zc_spmSubmit").remove(); } parentNode.submit();
         }
+
+        // Logic to capture traffic source from URL (e.g. ?source=linkedin)
+        (function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const source = urlParams.get('source') || urlParams.get('utm_source');
+            if (source) {
+                document.getElementById('sourceField').value = source;
+            }
+        })();
     </script>
 
 </body>
