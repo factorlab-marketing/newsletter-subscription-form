@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factorlab Core | Admin Dashboard</title>
+
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@500,700,900&display=swap" rel="stylesheet">
+
+    <style>
+        /* 
+         * 🎨 FACTORLAB DARK MODE PRESTIGE 
+         */
+        :root {
+            --bg-body: #050505;
+            --bg-card: #0f1115;
+            --text-primary: #ffffff;
+            --text-secondary: #94a3b8;
+            --accent-teal: #00b3a4;
+            --accent-glow: rgba(0, 179, 164, 0.2);
+            --border-dark: #1e293b;
+            --danger: #ef4444;
+
+            --font-heading: 'Satoshi', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 24px;
+        }
+
+        /* CARD STYLE */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dark);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .brand-logo {
+            height: 32px;
+            margin-bottom: 16px;
+            filter: invert(1);
+            /* Ensure simple logo is white if needed */
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        p.subtitle {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* FORMS */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            background: #0a0a0a;
+            border: 1px solid var(--border-dark);
+            color: var(--text-primary);
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-teal);
+            box-shadow: 0 0 0 2px var(--accent-glow);
+        }
+
+        button {
+            width: 100%;
+            background: var(--accent-teal);
+            color: #000;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        button:hover {
+            filter: brightness(1.1);
+            transform: translateY(-1px);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        button.secondary {
+            background: transparent;
+            border: 1px solid var(--border-dark);
+            color: var(--text-secondary);
+            margin-top: 12px;
+        }
+
+        button.secondary:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        /* ALERTS */
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .alert.error {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+
+        .alert.success {
+            background: rgba(0, 179, 164, 0.1);
+            border: 1px solid var(--accent-teal);
+            color: var(--accent-teal);
+        }
+
+        /* SCREENS */
+        #dashboardScreen,
+        #configScreen,
+        #loadingScreen {
+            display: none;
+        }
+
+        /* Dashboard styles */
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            margin: 24px 0 16px 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: var(--border-dark);
+            color: var(--text-secondary);
+        }
+
+        .status-badge.active {
+            background: rgba(0, 179, 164, 0.2);
+            color: var(--accent-teal);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="brand-header">
+            <!-- <img src="factorlab logo.png" alt="factorlab" class="brand-logo"> -->
+            <h1>Factorlab Core</h1>
+            <p class="subtitle">System Administration Dashboard</p>
+        </div>
+
+        <!-- 1️⃣ LOGIN SCREEN -->
+        <div id="loginScreen" class="card">
+            <div id="loginError" class="alert error">Invalid Password</div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Access Code</label>
+                    <input type="password" id="passwordInput" placeholder="Enter system password" required>
+                </div>
+                <button type="submit">Access Dashboard</button>
+            </form>
+        </div>
+
+        <!-- 2️⃣ CONFIG SCREEN (First time setup) -->
+        <div id="configScreen" class="card">
+            <div class="section-title">System Configuration</div>
+            <p class="subtitle" style="margin-bottom: 20px;">
+                Connect to the centralized repository to enable updates.
+            </p>
+            <form id="configForm">
+                <div class="form-group">
+                    <label>GitHub Personal Access Token (Repo Scope)</label>
+                    <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxx" required>
+                </div>
+                <div class="form-group">
+                    <label>Repository Owner</label>
+                    <input type="text" id="repoOwner" value="factorlab-marketing" required>
+                </div>
+                <div class="form-group">
+                    <label>Repository Name</label>
+                    <input type="text" id="repoName" value="newsletter-subscription-form" required>
+                </div>
+                <button type="submit">Connect to System</button>
+            </form>
+        </div>
+
+        <!-- 3️⃣ DASHBOARD SCREEN -->
+        <div id="dashboardScreen" class="card">
+            <div id="dashboardAlert" class="alert"></div>
+
+            <div class="section-title">
+                Redirect Configuration
+                <span class="status-badge" id="connectionStatus">Connected</span>
+            </div>
+
+            <form id="updateForm">
+                <div class="form-group">
+                    <label>Newsletter Redirect Link</label>
+                    <input type="text" id="newsletterLink" placeholder="Scanning..." required>
+                    <p class="subtitle" style="font-size: 0.8rem; margin-top: 6px;">
+                        Updates <code>index.html</code> and <code>newsletter/index.html</code>
+                    </p>
+                </div>
+
+                <div class="form-group">
+                    <label>Research Paper Redirect Link</label>
+                    <input type="text" id="researchLink" placeholder="Scanning..." required>
+                    <p class="subtitle" style="font-size: 0.8rem; margin-top: 6px;">
+                        Updates <code>research-paper/index.html</code>
+                    </p>
+                </div>
+
+                <div style="margin-top: 32px;">
+                    <button type="button" id="publishBtn">Publish Changes</button>
+                    <button type="button" class="secondary" id="refreshBtn">Reset / Refresh Data</button>
+                    <button type="button" class="secondary" id="logoutBtn" style="border:none; color: #ef4444;">Log
+                        Out</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- CONSTANTS & STATE ---
+        const PASSWORD = "factorlab-core";
+        const FILES = {
+            NEWSLETTER_MAIN: 'index.html',
+            NEWSLETTER_SUB: 'newsletter/index.html',
+            RESEARCH: 'research-paper/index.html'
+        };
+
+        let state = {
+            token: null,
+            owner: null,
+            repo: null,
+            fileShas: {}, // To store SHA for Git updates
+            currentLinks: {}
+        };
+
+        // --- DOM ELEMENTS ---
+        const screens = {
+            login: document.getElementById('loginScreen'),
+            config: document.getElementById('configScreen'),
+            dashboard: document.getElementById('dashboardScreen')
+        };
+
+        // --- INIT ---
+        function init() {
+            // Check session
+            if (sessionStorage.getItem('auth') === 'true') {
+                checkConfig();
+            } else {
+                showScreen('login');
+            }
+        }
+
+        function showScreen(name) {
+            Object.values(screens).forEach(el => el.style.display = 'none');
+            screens[name].style.display = 'block';
+        }
+
+        function checkConfig() {
+            const storedConfig = localStorage.getItem('gh_config');
+            if (storedConfig) {
+                const config = JSON.parse(storedConfig);
+                state = { ...state, ...config };
+                showScreen('dashboard');
+                fetchData();
+            } else {
+                showScreen('config');
+            }
+        }
+
+        // --- AUTHENTICATION ---
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = document.getElementById('passwordInput').value;
+            if (input === PASSWORD) {
+                sessionStorage.setItem('auth', 'true');
+                checkConfig();
+            } else {
+                document.getElementById('loginError').style.display = 'block';
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('auth');
+            location.reload();
+        });
+
+        // --- CONFIGURATION ---
+        document.getElementById('configForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const config = {
+                token: document.getElementById('githubToken').value,
+                owner: document.getElementById('repoOwner').value,
+                repo: document.getElementById('repoName').value
+            };
+            localStorage.setItem('gh_config', JSON.stringify(config));
+            state = { ...state, ...config };
+            showScreen('dashboard');
+            fetchData();
+        });
+
+        // --- GITHUB API interaction ---
+        const REPO_API = () => `https://api.github.com/repos/${state.owner}/${state.repo}/contents/`;
+
+        async function fetchData() {
+            setLoading(true);
+            try {
+                // Fetch Newsletter Main
+                const newsMain = await fetchFile(FILES.NEWSLETTER_MAIN);
+                // Fetch Research
+                const research = await fetchFile(FILES.RESEARCH);
+
+                // Store SHAs for updates
+                state.fileShas[FILES.NEWSLETTER_MAIN] = newsMain.sha;
+                // We assume sub-folder file exists, we'll fetch its SHA right before update to be safe, 
+                // or parallel fetch now. Let's fetch all 3 to be safe.
+                const newsSub = await fetchFile(FILES.NEWSLETTER_SUB);
+                state.fileShas[FILES.NEWSLETTER_SUB] = newsSub.sha;
+                state.fileShas[FILES.RESEARCH] = research.sha;
+
+                // Extract Links
+                const newsLink = extractLink(newsMain.content);
+                const resLink = extractLink(research.content);
+
+                // Update UI
+                document.getElementById('newsletterLink').value = newsLink;
+                document.getElementById('researchLink').value = resLink;
+
+                state.currentLinks = { newsLink, resLink };
+
+                showAlert('System connected and data loaded.', 'success');
+
+            } catch (err) {
+                console.error(err);
+                showAlert('Failed to load data. Check repository settings or token.', 'error');
+                // Allow user to reset config if failed
+                setTimeout(() => {
+                    if (confirm("Connection failed. Do you want to check your configuration?")) {
+                        showScreen('config');
+                    }
+                }, 1000);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        async function fetchFile(path) {
+            const response = await fetch(`${REPO_API()}${path}`, {
+                headers: {
+                    'Authorization': `token ${state.token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+            if (!response.ok) throw new Error(`Failed to fetch ${path}`);
+            const data = await response.json();
+            return {
+                sha: data.sha,
+                content: atob(data.content) // Decode Base64
+            };
+        }
+
+        function extractLink(html) {
+            // Regex to find window.location.href = "..."
+            const match = html.match(/window\.location\.href\s*=\s*["']([^"']+)["']/);
+            return match ? match[1] : '';
+        }
+
+        // --- UPDATES ---
+        document.getElementById('refreshBtn').addEventListener('click', fetchData);
+
+        document.getElementById('publishBtn').addEventListener('click', async () => {
+            const newNewsLink = document.getElementById('newsletterLink').value.trim();
+            const newResLink = document.getElementById('researchLink').value.trim();
+
+            if (!newNewsLink || !newResLink) {
+                showAlert('Links cannot be empty.', 'error');
+                return;
+            }
+
+            if (confirm("⚠️ Confirm Publication\n\nAre you sure you want to update the live system? This will trigger a new deployment.")) {
+                await publishChanges(newNewsLink, newResLink);
+            }
+        });
+
+        async function publishChanges(newsLink, resLink) {
+            setLoading(true);
+            try {
+                // 1. Update Newsletter Main
+                await updateFile(FILES.NEWSLETTER_MAIN, newsLink, state.fileShas[FILES.NEWSLETTER_MAIN]);
+
+                // 2. Update Newsletter Sub
+                // We need to fetch fresh SHA or content first strictly? 
+                // We have SHA from load. But content needs to be replaced carefully.
+                await updateFile(FILES.NEWSLETTER_SUB, newsLink, state.fileShas[FILES.NEWSLETTER_SUB]);
+
+                // 3. Update Research Paper
+                await updateFile(FILES.RESEARCH, resLink, state.fileShas[FILES.RESEARCH]);
+
+                showAlert('✅ Success! Changes published to GitHub. Deployment started.', 'success');
+
+                // Refresh data to get new SHAs
+                setTimeout(fetchData, 2000);
+
+            } catch (err) {
+                console.error(err);
+                showAlert(`Update failed: ${err.message}`, 'error');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        async function updateFile(path, newLink, sha) {
+            // First disable caching to get fresh content just in case, but for now relying on load state
+            // Re-fetch content to ensure we are replacing on fresh file
+            const currentData = await fetchFile(path);
+            let content = currentData.content;
+
+            // Regex Replace
+            const updatedContent = content.replace(
+                /window\.location\.href\s*=\s*["']([^"']+)["']/,
+                `window.location.href = "${newLink}"`
+            );
+
+            // Encode to Base64
+            const contentBase64 = btoa(updatedContent);
+
+            const response = await fetch(`${REPO_API()}${path}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${state.token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    message: `update redirect link for ${path} via Admin Dashboard`,
+                    content: contentBase64,
+                    sha: currentData.sha // Use fresh SHA
+                })
+            });
+
+            if (!response.ok) throw new Error(`Failed to update ${path}`);
+        }
+
+        // --- UTILS ---
+        function setLoading(isLoading) {
+            const btn = document.getElementById('publishBtn');
+            if (isLoading) {
+                btn.textContent = "Publishing...";
+                btn.disabled = true;
+            } else {
+                btn.textContent = "Publish Changes";
+                btn.disabled = false;
+            }
+        }
+
+        function showAlert(msg, type) {
+            const el = document.getElementById('dashboardAlert');
+            el.textContent = msg;
+            el.className = `alert ${type}`;
+            el.style.display = 'block';
+        }
+
+        // Start
+        init();
+
+    </script>
+</body>
+
+</html>
