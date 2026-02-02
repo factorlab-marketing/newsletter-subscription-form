@@ -233,8 +233,11 @@
                         </div>
                     </div>
 
+                    <!-- Hidden Iframe for Silent Submission -->
+                    <iframe name="zoho_submit_frame" id="zoho_submit_frame" style="display:none;"></iframe>
+
                     <form method="POST" id="zcampaignOptinForm"
-                        action="https://oklf-zgp4.maillist-manage.in/weboptin.zc" target="_zcSignup"
+                        action="https://oklf-zgp4.maillist-manage.in/weboptin.zc" target="zoho_submit_frame"
                         onsubmit="zcScptlessSubmit(this)">
                         <div id="errorMsgDiv">Please correct the marked field(s) below.</div>
 
@@ -288,7 +291,38 @@
     <!-- Zoho Helper & Tracking Script -->
     <script>
         function zcScptlessSubmit(parentNode) {
-            if (parentNode.querySelector("#zc_spmSubmit")) { parentNode.querySelector("#zc_spmSubmit").remove(); } parentNode.submit();
+            if (parentNode.querySelector("#zc_spmSubmit")) { parentNode.querySelector("#zc_spmSubmit").remove(); }
+
+            // Show loading state
+            const btn = document.getElementById('zcWebOptin');
+            if (btn) {
+                btn.value = "Processing...";
+                btn.disabled = true;
+                btn.style.opacity = "0.7";
+            }
+        }
+
+        // Handle Redirection after Submission
+        const iframe = document.getElementById('zoho_submit_frame');
+        let formSubmitted = false;
+
+        const form = document.getElementById('zcampaignOptinForm');
+        if (form) {
+            form.addEventListener('submit', function () {
+                formSubmitted = true;
+                // Optionally show success message immediately while redirect prepares
+                const successDiv = document.getElementById('Zc_SignupSuccess');
+                if (successDiv) successDiv.style.display = 'block';
+            });
+        }
+
+        if (iframe) {
+            iframe.onload = function () {
+                if (formSubmitted) {
+                    // Redirect to the Drive Link
+                    window.location.href = "https://drive.google.com/file/d/1388N6bObXGzieg-upjufKhCRyyiBCi12";
+                }
+            };
         }
 
         // Logic to capture traffic source from URL (e.g. ?source=linkedin)
